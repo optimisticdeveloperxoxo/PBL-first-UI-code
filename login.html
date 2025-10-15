@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduVault Login</title>
+  <style>
+    /* General Reset */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+
+    body {
+      background: linear-gradient(135deg, #4c6ef5, #00d1b2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Login Container */
+    .login-container {
+      background: #1e1e2f;
+      padding: 3rem 2.5rem;
+      border-radius: 15px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      color: #fff;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-container h1 { margin-bottom: 0.5rem; font-size: 1.8rem; color: #00d1b2; }
+    .login-container p { margin-bottom: 2rem; font-size: 0.95rem; color: #ccc; }
+
+    /* Inputs */
+    .login-form input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: white;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .login-form input:focus {
+      border-color: #00d1b2;
+      outline: none;
+      background-color: white;
+      color: #000;
+      box-shadow: 0 0 8px rgba(0, 209, 178, 0.5);
+    }
+
+    /* Login Button */
+    .login-btn {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #34e89e, #3a7bd5);
+      color: #fff;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Labels */
+    .login-form label {
+      display: block;
+      margin-bottom: 0.3rem;
+      text-align: left;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      .login-container { width: 90%; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h1>EduVault Login</h1>
+  <p>Use your MIT email and PRN to login</p>
+  <form class="login-form" onsubmit="return handleLogin(event)">
+    <label for="email">MIT Email</label>
+    <input type="email" id="email" placeholder="example@mitwpu.edu.in" required>
+
+    <label for="prn">PRN (10 digits, starts with 127)</label>
+    <input type="text" id="prn" placeholder="127XXXXXXXX" pattern="127[0-9]{7}" required>
+
+    <button type="submit" class="login-btn">Login</button>
+  </form>
+</div>
+
+<script>
+function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const prn = document.getElementById("prn").value.trim();
+
+  if(!email.endsWith("@mitwpu.edu.in")) {
+    alert("Please enter a valid MIT email");
+    return false;
+  }
+
+  const prnPattern = /^127\d{7}$/;
+  if(!prnPattern.test(prn)) {
+    alert("PRN must be 10 digits starting with 127");
+    return false;
+  }
+
+  localStorage.setItem("eduVaultUser", email);
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
