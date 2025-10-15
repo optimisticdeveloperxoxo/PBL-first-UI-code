@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduVault - BSc CS Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Make user logout button visible above hero */
+    #logoutBox {
+      display:none;
+      position:absolute;
+      top:50px;
+      right:20px;
+      background: linear-gradient(135deg,#34e89e,#3a7bd5);
+      color:#fff;
+      padding:0.5rem 1rem;
+      border-radius:8px;
+      font-weight:bold;
+      cursor:pointer;
+      box-shadow:0 5px 15px rgba(0,0,0,0.3);
+      z-index:9999;
+      transition: all 0.3s ease;
+    }
+    #userName {
+      color:#00d1b2;
+      font-weight:bold;
+      cursor:pointer;
+      position:relative;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">EduVault</div>
+    <nav>
+      <ul>
+        <li><a href="#pyqs">PYQs</a></li>
+        <li><a href="#notes">Notes</a></li>
+        <li><a href="#youtube">YouTube Hub</a></li>
+        <li><a href="#syllabus">Syllabus</a></li>
+        <li><a href="#forum">Forum</a></li>
+        <li><a href="#planner">Planner</a></li>
+        <li id="userDisplay"></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to EduVault</h1>
+    <p>Your one-stop academic assistant for BSc Computer Science.</p>
+    <a href="#pyqs" class="cta-btn">Start Learning</a>
+  </section>
+
+  <section class="cards-container">
+    <button class="card" id="pyqs" onclick="window.location.href='pyqs.html'">
+      <h2>📚 Previous Year Questions</h2>
+      <p>Access categorized and searchable PYQs by semester & subject.</p>
+    </button>
+
+    <button class="card" id="notes" onclick="window.location.href='notes.html'">
+      <h2>📝 Lecture Notes</h2>
+      <p>Download curated notes by toppers and professors.</p>
+    </button>
+
+    <button class="card" id="youtube" onclick="window.location.href='youtube.html'">
+      <h2>🎥 YouTube Learning Hub</h2>
+      <p>Best handpicked channels & playlists for BSc CS topics.</p>
+    </button>
+
+    <button class="card" id="syllabus" onclick="window.location.href='syllabus.html'">
+      <h2>📑 Syllabus Tracker</h2>
+      <p>Track completed and pending topics with our interactive tool.</p>
+    </button>
+
+    <button class="card" id="forum" onclick="window.location.href='forum.html'">
+      <h2>💬 Community Forum</h2>
+      <p>Ask questions, get answers, and connect with fellow learners.</p>
+    </button>
+
+    <button class="card" id="planner" onclick="window.location.href='planner.html'">
+      <h2>📆 Study Planner</h2>
+      <p>Organize your study schedule and set reminders.</p>
+    </button>
+  </section>
+
+  <footer>
+    <p>© 2025 EduVault. Built for BSc Computer Science students with ❤️</p>
+  </footer>
+
+  <script>
+    window.onload = function() {
+      const user = localStorage.getItem("eduVaultUser");
+
+      if(!user){
+        alert("Please log in to access EduVault");
+        window.location.href = "login.html";
+      } else {
+        const emailName = user.split('@')[0];
+        const parts = emailName.split('.');
+        let displayName = parts.map(p => p.charAt(0).toUpperCase()+p.slice(1)).join(' ');
+
+        const userDisplay = document.getElementById("userDisplay");
+        userDisplay.style.position = "relative";
+        userDisplay.innerHTML = `
+          <span id="userName">${displayName} ▼</span>
+          <div id="logoutBox">Logout</div>
+        `;
+
+        const userName = document.getElementById("userName");
+        const logoutBox = document.getElementById("logoutBox");
+
+        userName.onclick = () => {
+          logoutBox.style.display = logoutBox.style.display==='none'?'block':'none';
+        }
+
+        logoutBox.onclick = () => {
+          localStorage.removeItem("eduVaultUser");
+          window.location.href = "login.html";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
